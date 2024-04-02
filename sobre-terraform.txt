@@ -1,0 +1,27 @@
+terraform { -> configuração para  terraform
+
+}
+
+providers { -> configuração para o providers desejado
+
+}
+
+resource "aws_instance" "name_resource"{ -> para criar os serviços no providers
+
+}
+
+data "aws_ami" "name_data" { -> para buscar valores valores no providers
+
+}
+
+variable "" { -> variaveis
+
+}
+
+output "name_output" { -> saida da ao criar de algo que queremos pegar ao criar o recurso
+
+}
+
+locals {
+
+}
