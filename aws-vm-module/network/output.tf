@@ -1,8 +1,6 @@
 output "id_subnet" {
   description = "Id subnet"
-  value = {
-    for key, value in aws_subnet.subnet-main : key => value.id
-  }
+  value       = aws_subnet.subnet-main.id
 }
 
 output "id_security" {

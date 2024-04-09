@@ -1,18 +1,17 @@
 resource "aws_vpc" "vpc_main" {
-  cidr_block = "20.0.0.0/16"
+  cidr_block = var.cidr-vpc
 
   tags = {
-    Name = "vpc-main"
+    Name = "vpc-main-${var.environment}"
   }
 }
 
 resource "aws_subnet" "subnet-main" {
-  count      = 6
   vpc_id     = aws_vpc.vpc_main.id
-  cidr_block = "20.0.${count.index}.0/24"
+  cidr_block = var.subnet-cidr
 
   tags = {
-    Name = "subnet-${count.index}"
+    Name = "subnet-01-${var.environment}"
   }
 }
 
@@ -20,7 +19,7 @@ resource "aws_internet_gateway" "internet_gw" {
   vpc_id = aws_vpc.vpc_main.id
 
   tags = {
-    Name = "internet-gateway"
+    Name = "internet-gateway-${var.environment}"
   }
 }
 
@@ -34,20 +33,19 @@ resource "aws_route_table" "route-table" {
 
 
   tags = {
-    Name = "route-table-gateway"
+    Name = "route-table-gateway-${var.environment}"
   }
 }
 
 resource "aws_route_table_association" "a" {
-  count          = 6
-  subnet_id      = aws_subnet.subnet-main[count.index].id
+  subnet_id      = aws_subnet.subnet-main.id
   route_table_id = aws_route_table.route-table.id
 }
 
 resource "aws_security_group" "security-group" {
-  name        = "AllowSsh"
+  name        = "AllowSsh-${var.environment}"
   description = "AllowSsh"
-  vpc_id      = aws_vpc.vpc_main.id
+  vpc_id = aws_vpc.vpc_main.id
   ingress {
     from_port   = 22
     to_port     = 22

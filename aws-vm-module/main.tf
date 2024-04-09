@@ -8,7 +8,7 @@ terraform {
   }
   backend "s3" {
     bucket  = "descomplicando-terraform-remote-state"
-    key     = "aws-vpc/terraform.tfstate"
+    key     = "ec2-modules/terraform.tfstate"
     region  = "us-east-1"
     encrypt = true
     # profile = "aws-lucas"
@@ -18,9 +18,17 @@ terraform {
 provider "aws" {
   # access_key = ""
   # secret_key = ""
-  region = var.region
-  # profile = var.profile
+  region  = var.region
+  profile = var.profile
   default_tags {
     tags = local.common_tags
   }
+}
+
+module "network" {
+  source = "./network"
+
+  cidr-vpc = "20.0.0.0/16"
+  subnet-cidr = "20.0.1.0/24"
+  environment = "dev"
 }
