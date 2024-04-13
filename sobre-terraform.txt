@@ -25,3 +25,8 @@ output "name_output" { -> saida da ao criar de algo que queremos pegar ao criar 
 locals {
 
 }
+
+
+
+terraform plan -replace -> reconstroi aquele recurso que está dando problema
+terraform plan -target -> controi apenas aquele recurso mencionado 
