@@ -12,6 +12,7 @@ resource "aws_subnet" "subnet-main" {
   vpc_id     = aws_vpc.vpc_main.id
   cidr_block = "20.0.${count.index}.0/24"
   availability_zone  = data.aws_availability_zones.available.names[count.index]
+  map_public_ip_on_launch = true
   tags = {
     Name = "subnet-${count.index}"
   }
@@ -67,6 +68,14 @@ resource "aws_security_group" "ecs-security-group" {
   name        = "ecs-security-group"
   description = "ecs-security-group"
   vpc_id      = aws_vpc.vpc_main.id
+  ingress {
+   from_port   = 0
+   to_port     = 0
+   protocol    = -1
+   self        = "false"
+   cidr_blocks = ["0.0.0.0/0"]
+   description = "any"
+ }
   egress {
     from_port   = 0
     to_port     = 0

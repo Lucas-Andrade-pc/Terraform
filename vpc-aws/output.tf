@@ -16,7 +16,7 @@ output "id_security" {
 
 output "id_security_application" {
   description = "id application"
-  value       = aws_security_group.security-group.id
+  value       = aws_security_group.application_security_group.id
 }
 output "id_security_ecs" {
   description = "id security ecs"
