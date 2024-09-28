@@ -1,7 +1,8 @@
 data "aws_availability_zones" "available" {}
 resource "aws_vpc" "vpc_main" {
   cidr_block = "20.0.0.0/16"
-
+  enable_dns_support = true
+  enable_dns_hostnames = true
   tags = {
     Name = "vpc-main"
   }
@@ -33,8 +34,6 @@ resource "aws_route_table" "route-table" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.internet_gw.id
   }
-
-
   tags = {
     Name = "route-table-gateway"
   }
